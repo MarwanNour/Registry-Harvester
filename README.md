@@ -11,7 +11,7 @@ Generated with [Bashly](https://github.com/DannyBen/bashly).
 
 ## Usage
 
-```bash
+```
 ./regharvest --help
 regharvest - Harvest Blobs from Docker Registry V2
 

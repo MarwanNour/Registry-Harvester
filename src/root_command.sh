@@ -78,7 +78,9 @@ for repo in $repositories; do
         # Get manifest
         response=$(curl --silent $insecure $auth_str ${args[source]}/v2/$repo/manifests/$tag)
         blobs=$(echo $response | jq -r .fsLayers[].blobSum)
-        echo $blobs
+
+        printf "\n\nAvailable Blobs:\n\n$blobs\n\n"
+
 
         # TODO: Save blobs in a set (no duplicates)
         # TODO: Download blobs as .tar.gz in output folder 
