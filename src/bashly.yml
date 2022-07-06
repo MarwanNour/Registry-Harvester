@@ -1,0 +1,45 @@
+name: regharvest
+help: Harvest Blobs from Docker Registry V2
+version: RegistryHarvester v0.1
+
+args:
+- name: source
+  required: true
+  help: URL (or IP) to download from
+- name: output
+  required: true
+  help: Output folder
+
+flags:
+- long: --user
+  short: -u
+  arg: user
+  help: Username to use for logging in
+- long: --pass
+  short: -p
+  arg: password
+  help: Password to use for logging in
+- long: --insecure
+  short: -k
+  help: Allow insecure server connections when using SSL
+- long: --debug
+  short: -d
+  help: Print Debug output
+
+examples:
+- regharvest example.com output-folder
+- regharvest example.com output-folder --user username --pass password
+- regharvest example.com output-folder --insecure 
+
+# Banner
+#     ____             _      __                    
+#    / __ \___  ____ _(_)____/ /________  __        
+#   / /_/ / _ \/ __ `/ / ___/ __/ ___/ / / /        
+#  / _, _/  __/ /_/ / (__  ) /_/ /  / /_/ /         
+# /_/ |_|\___/\__, /_/____/\__/_/   \__, /          
+#     __  __ /____/                /_____           
+#    / / / /___ _______   _____  _____/ /____  _____
+#   / /_/ / __ `/ ___/ | / / _ \/ ___/ __/ _ \/ ___/
+#  / __  / /_/ / /   | |/ /  __(__  ) /_/  __/ /    
+# /_/ /_/\__,_/_/    |___/\___/____/\__/\___/_/     
+                                                  
