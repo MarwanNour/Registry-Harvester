@@ -1,6 +1,6 @@
 name: regharvest
 help: Harvest Blobs from Docker Registry V2
-version: RegistryHarvester v0.1
+version: RegistryHarvester v1.0
 
 args:
 - name: source

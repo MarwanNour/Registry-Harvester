@@ -25,11 +25,17 @@ fi
 req_test=$(jq --version)
 
 if [[ $? -eq 127 ]]; then
-  echo "Please install jq to use this tool"
+  echo "Error: Please install jq to use this tool"
   exit 1
 fi
 
 echo ""
+
+# Check output dir
+if [ -d ${args[output]} ]; then
+  echo "Error: Output directory already exists"
+  exit 1
+fi
 
 # Insecure
 insecure=""
@@ -79,11 +85,25 @@ for repo in $repositories; do
         response=$(curl --silent $insecure $auth_str ${args[source]}/v2/$repo/manifests/$tag)
         blobs=$(echo $response | jq -r .fsLayers[].blobSum)
 
-        printf "\n\nAvailable Blobs:\n\n$blobs\n\n"
+        # Save to array
+        # printf "\n\nAvailable Blobs (Array):\n\n"
+        declare -a arr
+        for b in $blobs; do
+          arr+=($(echo $b | cut -c 8-)) # remove "sha256:" prefix
+        done
+
+        # Remove duplicates
+        uniqs_arr=($(for elem in "${arr[@]}"; do echo "${elem}"; done | sort -u))
 
 
-        # TODO: Save blobs in a set (no duplicates)
-        # TODO: Download blobs as .tar.gz in output folder 
+        # Create output folder
+        mkdir -p ${args[output]}
+
+        # Download blobs as .tar.gz in output folder 
+        for elem in ${uniqs_arr[@]}; do
+          response=$(curl --silent $insecure $auth_str ${args[source]}/v2/$repo/blobs/sha256:$elem > ${args[output]}/$elem.tar.gz)
+          echo "-> Downloaded: $elem"
+        done
 
         # Return/Exit 0
         exit 0
